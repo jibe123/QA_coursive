@@ -29,8 +29,8 @@ def welcome(message):
     global sluglist
     sluglist = []
     for item in all_items:
-        button = InlineKeyboardButton(item[0], callback_data=item[1].replace("-", "_"))
-        sluglist.append(item[1].replace("-", "_"))
+        button = InlineKeyboardButton(item[0], callback_data=item[1])
+        sluglist.append(item[1])
         markup.add(button)
     bot.send_message(message.chat.id, welcome_text, reply_markup=markup)
 
@@ -39,7 +39,7 @@ def welcome(message):
 def course_details(call):
     message = call.message
     cursor = db.cursor()
-    slug = call.data.replace("_", "-")
+    slug = call.data
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     query = CoursesDetails.select().where(CoursesDetails.details_slug_id == slug)
